@@ -1,4 +1,3 @@
-// this is a test to see how the Git inttegration works
 //jQuery.ajax({
 //    url: '//apis.google.com/js/client.js',
 //    jsonp: 'onload',

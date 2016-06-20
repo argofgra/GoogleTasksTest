@@ -10,7 +10,8 @@
             .when('/lists', {
                 templateUrl: 'lists.html',
                 controller: 'ListsController'
-            }).when('/loading', {
+            })
+            .when('/loading', {
                 templateUrl: 'loading.html',
                 controller: 'LoadingController'
             })
@@ -22,7 +23,13 @@
             //    templateUrl: 'repo.html',
             //    controller: 'RepoController'
             //})
-            .otherwise({redirectTo: '/loading'});
+            .otherwise({redirectTo: '/lists'});
+    }).run(function($rootScope, $location) {
+        $rootScope.$on("$locationChangeStart", function(event, next, current) {
+            if ($rootScope.isAuthenticated !== true && next.templateUrl !== "/loading") {
+                $location.path('/loading');
+            }
+        });
     });
 
 }());
