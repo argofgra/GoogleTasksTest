@@ -1,7 +1,7 @@
 /**
  * Created by Rebecca on 6/7/2016.
  */
-(function () {
+(function() {
 
     var ListsController = function($scope, $log, tasks) {
 

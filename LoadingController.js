@@ -1,9 +1,9 @@
 (function () {
 
-    var LoadingController = function($scope, $rootScope, $log, tasks, $http, $location) {
+    var LoadingController = function ($scope, $rootScope, $log, tasks, $http, $location) {
         $log.log('loading...');
 
-        var authSuccess = function(value) {
+        var authSuccess = function (value) {
             $log.log('Authorization successful!');
             $rootScope.isAuthenticated = true;
             $scope.showAuthButton = false;
@@ -11,7 +11,7 @@
             $location.path('/lists');
         };
 
-        var authFail = function(error) {
+        var authFail = function (error) {
             $log.error('Authorization failed :(');
             $rootScope.isAuthenticated = false;
             $scope.showAuthButton = true;
@@ -23,7 +23,7 @@
         $rootScope.isAuthenticated = false;
 
         // run initialization code
-        var init = function() {
+        var init = function () {
             $log.log('init');
             if (gapiLoaded) {
                 tasks.checkAuth(true).then(authSuccess, authFail);
@@ -33,7 +33,7 @@
             }
         };
 
-        $scope.authButtonClick = function() {
+        $scope.authButtonClick = function () {
             $log.log('Auth button clicked...');
             tasks.checkAuth(false).then(authSuccess).fail(authFail);
         };
