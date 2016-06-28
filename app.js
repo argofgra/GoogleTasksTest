@@ -1,11 +1,12 @@
 /**
  * Created by Rebecca on 6/7/2016.
  */
-(function(){
+(function() {
+    "use strict";
 
     var app = angular.module('TasksList', ["ngRoute"]);
 
-    app.config(function($routeProvider){
+    app.config(function($routeProvider) {
         $routeProvider
             .when('/lists', {
                 templateUrl: 'lists.html',

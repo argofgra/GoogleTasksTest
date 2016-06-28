@@ -1,9 +1,14 @@
-(function () {
+(function() {
+    "use strict";
 
-    var LoadingController = function ($scope, $rootScope, $log, tasks, $http, $location) {
+    var LoadingController = function($scope, $rootScope, $log, tasks, $http, $location) {
         $log.log('loading...');
 
-        var authSuccess = function (value) {
+        /**
+         * Handles successful authorization, redirecting to /lists
+         * @param value
+         */
+        var authSuccess = function(value) {
             $log.log('Authorization successful!');
             $rootScope.isAuthenticated = true;
             $scope.showAuthButton = false;
@@ -11,7 +16,11 @@
             $location.path('/lists');
         };
 
-        var authFail = function (error) {
+        /**
+         * Handles failed authorization, showing the authenticate button
+         * @param error
+         */
+        var authFail = function(error) {
             $log.error('Authorization failed :(');
             $rootScope.isAuthenticated = false;
             $scope.showAuthButton = true;
@@ -22,8 +31,10 @@
         $scope.showAuthButton = false;
         $rootScope.isAuthenticated = false;
 
-        // run initialization code
-        var init = function () {
+        /**
+         * Waits for gapi to load and then checks if user is authenticated
+         */
+        var init = function() {
             $log.log('init');
             if (gapiLoaded) {
                 tasks.checkAuth(true).then(authSuccess, authFail);
@@ -33,7 +44,10 @@
             }
         };
 
-        $scope.authButtonClick = function () {
+        /**
+         * Authorization button click handler
+         */
+        $scope.authButtonClick = function() {
             $log.log('Auth button clicked...');
             tasks.checkAuth(false).then(authSuccess).fail(authFail);
         };
@@ -55,6 +69,6 @@
 
     };
     var app = angular.module('TasksList');
-    app.controller('LoadingController', LoadingController)
+    app.controller('LoadingController', LoadingController);
 
 }());
