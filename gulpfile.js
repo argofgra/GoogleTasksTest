@@ -4,6 +4,7 @@
 var gulp = require('gulp');
 var args = require('yargs').argv;
 var config = require('./gulp.config')();
+var del = require('del');
 var $ = require('gulp-load-plugins')({lazy: true});
 
 gulp.task('vet', function() {
@@ -20,7 +21,37 @@ gulp.task('vet', function() {
         .pipe($.jshint.reporter('fail'));
 });
 
+gulp.task('styles', ['clean-styles'], function() {
+    "use strict";
+    log('Compiling Less -> CSS');
+    return gulp
+       .src(config.less)
+       .pipe($.plumber())
+       .pipe($.less())
+       .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+       .pipe(gulp.dest(config.temp));
+});
+
+gulp.task('clean-styles', function(done) {
+    "use strict";
+    var files = config.temp + '*.css';
+    clean(files, done);
+
+});
+
+gulp.task('less-watcher', function() {
+    "use strict";
+    gulp.watch([config.less], ['styles']);
+});
+
 /* utilities */
+function clean(path, done) {
+    "use strict";
+
+    log("Cleaning up " + path);
+    del(path).then(done());
+}
+
 function log(msg) {
     "use strict";
 
