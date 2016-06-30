@@ -44,6 +44,30 @@ gulp.task('less-watcher', function() {
     gulp.watch([config.less], ['styles']);
 });
 
+gulp.task('wiredep', function() {
+    "use strict";
+
+    log('Inject Bower JS/CSS into index.html');
+    var wiredep = require('wiredep').stream;
+    return gulp
+        .src(config.index)
+        .pipe(wiredep(config.wiredepOptions))
+        .pipe(gulp.dest('./'));
+});
+
+gulp.task('inject', ['wiredep', 'styles'], function() {
+    "use strict";
+
+    log('Wire up and inject custom JS/CSS into index.html');
+    return gulp
+        .src(config.index)
+        .pipe($.inject(gulp.src(config.js), {relative: true}))
+        .pipe($.inject(gulp.src(config.css), {relative: true}))
+        //.pipe($.inject(gulp.src(config.js), {addPrefix: 'GoogleTasksTest'}))
+       //.pipe($.inject(gulp.src(config.css), {addPrefix: 'GoogleTasksTest'}))
+        .pipe(gulp.dest('./'));
+});
+
 /* utilities */
 function clean(path, done) {
     "use strict";

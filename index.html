@@ -17,23 +17,34 @@
 <html ng-app="TasksList">
 <head>
     <meta charset='utf-8'/>
+    <!--bower:css-->
+    <!--endbower-->
+
+    <!--inject:css-->
+    <link rel="stylesheet" href="tmp/styles.css">
+    <!--endinject-->
 </head>
 <body>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script data-require="angular.js@1.5.5" data-semver="1.5.5"
-        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-<script data-require="angular-route@*" data-semver="1.4.8"
-        src="https://code.angularjs.org/1.4.8/angular-route.js"></script>
-<script src="app.js"></script>
-<script src="https://apis.google.com/js/client.js?onload=googleClientLoaded"></script>
-<script src="tasks.js"></script>
-<script src="LoadingController.js"></script>
-<script src="ListsController.js"></script>
 <div id="content">
     <h1>Tasks List App</h1>
 
     <div ng-view></div>
 
 </div>
+
+<!--bower:js-->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<!--endbower-->
+
+<!--inject:js-->
+<script src="scripts/app.js"></script>
+<script src="scripts/ListsController.js"></script>
+<script src="scripts/LoadingController.js"></script>
+<script src="scripts/tasks.js"></script>
+<!--endinject-->
+<script src="https://apis.google.com/js/client.js?onload=googleClientLoaded"></script>
+
 </body>
 </html>

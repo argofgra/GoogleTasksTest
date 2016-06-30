@@ -1,0 +1,26 @@
+{
+  "name": "googletaskstest",
+  "description": "First attempt at Google Tasks app",
+  "main": "app.js",
+  "authors": [
+    "Jason Cole"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "tasks"
+  ],
+  "homepage": "https://github.com/argofgra/GoogleTasksTest",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.0.0",
+    "angular": "^1.5.7",
+    "angular-route": "^1.5.7"
+  },
+  "devDependencies": {}
+}
