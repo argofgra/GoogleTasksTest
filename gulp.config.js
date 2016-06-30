@@ -1,7 +1,7 @@
 module.exports = function() {
     "use strict";
 
-    var temp = './tmp/';
+    var temp = './.tmp/';
 
     var config = {
         temp: temp,
