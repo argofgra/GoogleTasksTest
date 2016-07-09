@@ -2,9 +2,9 @@
   "name": "googletaskstest",
   "version": "1.0.0",
   "description": "First attempt at Google Tasks app",
-  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/argofgra/GoogleTasksTest#readme",
   "devDependencies": {
+    "browser-sync": "^2.13.0",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "cors": "^2.7.1",
@@ -33,6 +34,7 @@
     "gulp-jshint": "^2.0.1",
     "gulp-less": "^3.1.0",
     "gulp-load-plugins": "^1.2.4",
+    "gulp-nodemon": "^2.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-print": "^2.0.1",
     "gulp-util": "^3.0.7",

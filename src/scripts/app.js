@@ -9,11 +9,11 @@
     app.config(function($routeProvider) {
         $routeProvider
             .when('/lists', {
-                templateUrl: 'lists.html',
+                templateUrl: '../lists.html',
                 controller: 'ListsController'
             })
             .when('/loading', {
-                templateUrl: 'loading.html',
+                templateUrl: '../loading.html',
                 controller: 'LoadingController'
             })
             //.when('/user/:username', {

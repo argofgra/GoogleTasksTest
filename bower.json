@@ -1,7 +1,6 @@
 {
   "name": "googletaskstest",
   "description": "First attempt at Google Tasks app",
-  "main": "app.js",
   "authors": [
     "Jason Cole"
   ],
@@ -22,5 +21,6 @@
     "angular": "^1.5.7",
     "angular-route": "^1.5.7"
   },
-  "devDependencies": {}
+  "devDependencies": {
+  }
 }
