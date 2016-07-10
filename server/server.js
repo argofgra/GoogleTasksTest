@@ -5,6 +5,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var compress = require('compression');
 var cors = require('cors');
+var config = require('../gulp.config')();
 var errorHandler = require('./errorHandler')();
 //var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -37,15 +38,15 @@ app.get('/ping', function(req, res, next) {
 switch (environment) {
     case 'build':
         console.log('** BUILD **');
-        app.use(express.static('./build/'));
-        app.use('/*', express.static('./build/index.html'));
+        app.use(express.static(config.build));
+        app.use('/*', express.static(config.build + 'index.html'));
         break;
     default:
         console.log('** DEV **');
-        app.use(express.static('./src/'));
+        app.use(express.static(config.source));
         app.use(express.static('./'));
-        app.use(express.static('./.tmp'));
-        app.use('/*', express.static('./src/index.html'));
+        app.use(express.static(config.temp));
+        app.use('/*', express.static(config.index));
         break;
 }
 

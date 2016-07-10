@@ -73,7 +73,28 @@ gulp.task('clean-styles', function(done) {
     "use strict";
     var files = config.temp + '**/*.css';
     clean(files, done);
+});
 
+gulp.task('clean-code', function(done) {
+    var files = [].concat(
+        config.temp + '**/*.js',
+        config.build + '**/*.html',
+        config.build + 'js/**/*.js'
+    );
+    clean(files, done);
+});
+
+gulp.task('templatecache', ['clean-code'], function() {
+    log('Creating AngularJS $templateCache');
+
+    return gulp
+        .src(config.htmltemplates)
+        .pipe($.minifyHtml({empty: true}))
+        .pipe($.angularTemplatecache(
+            config.templateCache.file,
+            config.templateCache.options
+        ))
+        .pipe(gulp.dest(config.temp));
 });
 
 gulp.task('less-watcher', function() {
@@ -89,7 +110,7 @@ gulp.task('wiredep', function() {
     return gulp
         .src(config.index)
         .pipe(wiredep(config.wiredepOptions))
-        .pipe(gulp.dest('./src/'));
+        .pipe(gulp.dest(config.source));
 });
 
 gulp.task('inject', ['wiredep', 'styles'], function() {
@@ -105,7 +126,7 @@ gulp.task('inject', ['wiredep', 'styles'], function() {
         .src(config.index)
         .pipe($.inject(gulp.src(config.js)))
         .pipe($.inject(gulp.src(config.css)))
-        .pipe(gulp.dest('./src/'));
+        .pipe(gulp.dest(config.source));
 });
 
 gulp.task('serve-dev', ['inject'], function() {
@@ -159,7 +180,7 @@ function startBrowserSync() {
         proxy: 'localhost:' + port,
         port: 3000,
         files: [
-            './src/**/*.*',
+            config.source + '**/*.*',
             '!src/*.less',
             config.temp + '**/*.css'
         ],

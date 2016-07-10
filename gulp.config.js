@@ -2,26 +2,39 @@ module.exports = function() {
     "use strict";
 
     var temp = './.tmp/';
+    var build = './build/';
+    var source = './src/';
+    var server = './server/';
 
     var config = {
         temp: temp,
         alljs: [
-            './*.js'
+            source + '**/*.js'
         ],
-        build: './build/',
-        index: './src/index.html',
+        build: build,
+        index: source + 'index.html',
         fonts: './bower_components/font-awesome/fonts/**/*.*',
-        images: './src/images/**/*.*',
-        less: './src/styles.less',
+        images: source + 'images/**/*.*',
+        less: source + 'styles.less',
         css: temp + 'styles.css',
-        js: './src/scripts/**/*.*',
+        js: source + 'scripts/**/*.*',
+        source: source,
+        htmltemplates: source + 'templates/**/*.html',
+        templateCache: {
+            file: 'templates.js',
+            options: {
+                module: 'TasksList',
+                standAlone: false/*,
+                root: 'app/'*/
+            }
+        },
         wiredepOptions: {
             bowerJson: require('./bower.json'),
             directory: './bower_components',
             ignorePath: '../..'
         },
-        nodeserver: './server/server.js',
-        server: './server/',
+        nodeserver: server + 'server.js',
+        server: server,
         browserReloadDelay: 1000,
         defaultPort: 7203
     };
