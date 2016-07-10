@@ -8,10 +8,13 @@ module.exports = function() {
         alljs: [
             './*.js'
         ],
+        build: './build/',
         index: './src/index.html',
+        fonts: './bower_components/font-awesome/fonts/**/*.*',
+        images: './src/images/**/*.*',
         less: './src/styles.less',
         css: temp + 'styles.css',
-        js: './src/scripts/**/*.js',
+        js: './src/scripts/**/*.*',
         wiredepOptions: {
             bowerJson: require('./bower.json'),
             directory: './bower_components',
