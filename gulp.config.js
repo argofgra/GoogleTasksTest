@@ -24,14 +24,14 @@ module.exports = function() {
             file: 'templates.js',
             options: {
                 module: 'TasksList',
-                standAlone: false/*,
-                root: 'app/'*/
+                standAlone: false,
+                root: 'templates/'
             }
         },
         wiredepOptions: {
             bowerJson: require('./bower.json'),
             directory: './bower_components',
-            ignorePath: '../..'
+            ignorePath: '..'
         },
         nodeserver: server + 'server.js',
         server: server,

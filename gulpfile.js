@@ -129,8 +129,29 @@ gulp.task('inject', ['wiredep', 'styles'], function() {
         .pipe(gulp.dest(config.source));
 });
 
+gulp.task('optimize', ['inject'], function() {
+    log('Optimizing JS/CSS/HTML');
+    var templateCache = config.temp + config.templateCache.file;
+
+    return gulp
+        .src(config.index)
+        .pipe($.plumber())
+        .pipe($.inject(gulp.src(templateCache, {read: false}), {
+            starttag: '<!-- inject:templates:js -->'
+        }))
+        .pipe($.useref({searchPath: './'}))
+        .pipe(gulp.dest(config.build));
+});
+
 gulp.task('serve-dev', ['inject'], function() {
-    var isDev = true;
+    return serve(true);
+});
+
+gulp.task('serve-build', ['optimize'], function() {
+    return serve(false);
+});
+
+function serve(isDev) {
     var nodeOptions = {
         script: config.nodeServer,
         delayTime: 1,
@@ -142,48 +163,53 @@ gulp.task('serve-dev', ['inject'], function() {
     };
 
     return $.nodemon(nodeOptions)
-        .on('restart', function(ev) {
+        .on('restart', function (ev) {
             log('*** nodemon restarted');
             log('files changed on restart:\n' + ev);
-            setTimeout(function() {
+            setTimeout(function () {
                 browserSync.notify('browsersync reloading now...');
                 browserSync.reload({stream: false});
             }, config.browserReloadDelay);
         })
-        .on('start', function() {
+        .on('start', function () {
             log('*** nodemon started');
-            startBrowserSync();
+            startBrowserSync(isDev);
         })
-        .on('crash', function() {
+        .on('crash', function () {
             log('*** nodemon crashed');
         })
-        .on('exit', function() {
+        .on('exit', function () {
             log('*** nodemon exited cleanly');
         });
-});
+}
 
 function changeEvent(event) {
     var srcPattern = new RegExp('/.*(?=/' + config.source + ')/');
     log('^^^File ' + event.path.replace(srcPattern, '') + ' ' + event.type);
 }
 
-function startBrowserSync() {
+function startBrowserSync(isDev) {
     if (browserSync.active || args.nosync) {
         return;
     }
 
     log('Starting browser sync');
-    gulp.watch([config.less], ['styles'])
-        .on('change', function(event) {changeEvent(event);});
+    if (isDev) {
+        gulp.watch([config.less], ['styles'])
+            .on('change', function(event) {changeEvent(event);});
+    } else {
+        gulp.watch([config.less, config.js, config.htmltemplates], ['optimize'])
+            .on('change', function(event) {changeEvent(event);});
+    }
 
     var options = {
         proxy: 'localhost:' + port,
         port: 3000,
-        files: [
+        files: isDev ? [
             config.source + '**/*.*',
             '!src/*.less',
             config.temp + '**/*.css'
-        ],
+        ] : [],
         ghostMode: {
             clicks: true,
             location: false,
