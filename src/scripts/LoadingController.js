@@ -35,7 +35,13 @@
          * Waits for gapi to load and then checks if user is authenticated
          */
         var init = function() {
-            $log.log('init');
+            $log.log('init: gapiLoaded = ' + gapiLoaded.toString());
+            if (googleClientLoaded) {
+                $log.log('googleClientLoaded is a thing');
+            } else {
+                $log.log('no such thing as googleClientLoaded');
+            }
+
             if (gapiLoaded) {
                 tasks.checkAuth(true).then(authSuccess, authFail);
             } else {

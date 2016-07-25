@@ -9,7 +9,7 @@ var del = require('del');
 var $ = require('gulp-load-plugins')({lazy: true});
 var port = process.env.PORT || config.defaultPort;
 
-gulp.task('default', ['serve-dev']);
+gulp.task('default', ['help']);
 
 gulp.task('help', $.taskListing);
 
@@ -113,18 +113,23 @@ gulp.task('wiredep', function() {
         .pipe(gulp.dest(config.source));
 });
 
-gulp.task('inject', ['wiredep', 'styles'], function() {
+gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
     "use strict";
 
-    if (args.noinject) {
-        //return gulp.pipe(); TODO: figure this out
-        //return;
+    log('Wire up and inject custom JS/CSS into index.html');
+    var gulpObj = gulp
+        .src(config.index);
+
+    log('Removing template cache...');
+    gulpObj.pipe($.replace(/<!--\s*inject:templates:js\s*-->([\s\S]+?)<!--\s*endinject\s*-->/g, '<!--inject:templates:js-->\n<!--endinject-->'));
+
+    if (args.templatecache === true) {
+        log('Injecting template cache...');
+        var templateCache = config.temp + config.templateCache.file;
+        gulpObj.pipe($.inject(gulp.src(templateCache, {read: false}), { starttag: '<!-- inject:templates:js -->' }));
     }
 
-    log('Wire up and inject custom JS/CSS into index.html');
-    return gulp
-        .src(config.index)
-        .pipe($.inject(gulp.src(config.js)))
+    return gulpObj.pipe($.inject(gulp.src(config.js)))
         .pipe($.inject(gulp.src(config.css)))
         .pipe(gulp.dest(config.source));
 });
@@ -136,9 +141,9 @@ gulp.task('optimize', ['inject'], function() {
     return gulp
         .src(config.index)
         .pipe($.plumber())
-        .pipe($.inject(gulp.src(templateCache, {read: false}), {
-            starttag: '<!-- inject:templates:js -->'
-        }))
+        //.pipe($.inject(gulp.src(templateCache, {read: false}), {
+        //    starttag: '<!--inject:templates:js-->'
+        //}))
         .pipe($.useref({searchPath: './'}))
         .pipe(gulp.dest(config.build));
 });
@@ -208,7 +213,7 @@ function startBrowserSync(isDev) {
         files: isDev ? [
             config.source + '**/*.*',
             '!src/*.less',
-            config.temp + '**/*.css'
+            config.temp + '**/*.*'
         ] : [],
         ghostMode: {
             clicks: true,
@@ -226,6 +231,18 @@ function startBrowserSync(isDev) {
     };
 
     browserSync(options);
+}
+
+function dealWithTemplateCache(g, isDev) {
+    var templateCache = config.temp + config.templateCache.file;
+
+    log('Removing template cache...');
+    g.pipe($.replace(/<!--\s*inject:templates:js\s*-->([\s\S]+?)<!--\s*endinject\s*-->/g, '<!--inject:templates:js-->\n<!--endinject-->'));
+
+    if (!isDev || (isDev && args.templatecache === true)) {
+        log('Injecting template cache...');
+        g.pipe($.inject(gulp.src(templateCache, {read: false}), { starttag: '<!-- inject:templates:js -->' }));
+    }
 }
 
 function clean(path, done) {

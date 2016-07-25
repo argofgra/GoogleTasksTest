@@ -9,11 +9,11 @@
     app.config(function($routeProvider) {
         $routeProvider
             .when('/lists', {
-                templateUrl: '../templates/lists.html',
+                templateUrl: 'templates/lists.html',
                 controller: 'ListsController'
             })
             .when('/loading', {
-                templateUrl: '../templates/loading.html',
+                templateUrl: 'templates/loading.html',
                 controller: 'LoadingController'
             })
             //.when('/user/:username', {
@@ -32,10 +32,10 @@
             }
         });
     });
-
 }());
 
 var gapiLoaded = false;
 function googleClientLoaded() {
+    console.log('googleClientLoaded callback');
     gapiLoaded = true;
 }
