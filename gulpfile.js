@@ -121,7 +121,7 @@ gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
         .src(config.index);
 
     log('Removing template cache...');
-    gulpObj.pipe($.replace(/<!--\s*inject:templates:js\s*-->([\s\S]+?)<!--\s*endinject\s*-->/g, '<!--inject:templates:js-->\n<!--endinject-->'));
+    gulpObj.pipe($.replace(/<!--\s*inject:templates:js\s*-->([\s\S]+?)<!--\s*endinject\s*-->/g, '<!--inject:templates:js-->\r\n<!--endinject-->'));
 
     if (args.templatecache === true) {
         log('Injecting template cache...');
@@ -135,15 +135,17 @@ gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
 });
 
 gulp.task('optimize', ['inject'], function() {
+    "use strict";
+
     log('Optimizing JS/CSS/HTML');
     var templateCache = config.temp + config.templateCache.file;
 
     return gulp
         .src(config.index)
         .pipe($.plumber())
-        //.pipe($.inject(gulp.src(templateCache, {read: false}), {
-        //    starttag: '<!--inject:templates:js-->'
-        //}))
+        .pipe($.inject(gulp.src(templateCache, {read: false}), {
+            starttag: '<!--inject:templates:js-->'
+        }))
         .pipe($.useref({searchPath: './'}))
         .pipe(gulp.dest(config.build));
 });
@@ -237,7 +239,7 @@ function dealWithTemplateCache(g, isDev) {
     var templateCache = config.temp + config.templateCache.file;
 
     log('Removing template cache...');
-    g.pipe($.replace(/<!--\s*inject:templates:js\s*-->([\s\S]+?)<!--\s*endinject\s*-->/g, '<!--inject:templates:js-->\n<!--endinject-->'));
+    //g.pipe($.replace(/<!--\s*inject:templates:js\s*-->([\s\S]+?)<!--\s*endinject\s*-->/g, '<!--inject:templates:js-->\n<!--endinject-->'));
 
     if (!isDev || (isDev && args.templatecache === true)) {
         log('Injecting template cache...');
