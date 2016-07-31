@@ -4,7 +4,6 @@
 (function() {
     "use strict";
 
-
     var ListsController = function($scope, $log, tasks) {
 
         /**
@@ -28,6 +27,7 @@
 
     };
 
+    ListsController.$inject = ['$scope', '$log', 'tasks'];
     var app = angular.module('TasksList');
     app.controller('ListsController', ListsController);
 }());

@@ -77,6 +77,7 @@
 
     };
 
+    tasks.$inject = ['$q', '$log'];
     var app = angular.module('TasksList');
     app.factory('tasks', tasks);
 }());

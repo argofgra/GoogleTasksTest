@@ -74,6 +74,8 @@
 
 
     };
+
+    LoadingController.$inject = ['$scope', '$rootScope', '$log', 'tasks', '$http', '$location'];
     var app = angular.module('TasksList');
     app.controller('LoadingController', LoadingController);
 

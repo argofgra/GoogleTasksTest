@@ -4,9 +4,12 @@
 (function() {
     "use strict";
 
-    var app = angular.module('TasksList', ["ngRoute"]);
+     angular.module('TasksList', ["ngRoute"])
+        .config(configRoutes)
+        .run(appRun);
 
-    app.config(function($routeProvider) {
+    configRoutes.$inject = ['$routeProvider'];
+    function configRoutes($routeProvider) {
         $routeProvider
             .when('/lists', {
                 templateUrl: 'templates/lists.html',
@@ -25,13 +28,16 @@
             //    controller: 'RepoController'
             //})
             .otherwise({redirectTo: '/lists'});
-    }).run(function($rootScope, $location) {
+    }
+
+    appRun.$inject = ['$rootScope', '$location'];
+    function appRun($rootScope, $location) {
         $rootScope.$on("$locationChangeStart", function(event, next, current) {
             if ($rootScope.isAuthenticated !== true && next.templateUrl !== "/loading") {
                 $location.path('/loading');
             }
         });
-    });
+    }
 }());
 
 var gapiLoaded = false;
