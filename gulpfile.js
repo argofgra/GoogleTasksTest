@@ -148,7 +148,9 @@ gulp.task('optimize', ['inject'], function() {
         }))
         .pipe($.useref({searchPath: './'}))
         .pipe($.if('**/*.css', $.csso()))
-        .pipe($.if('**/*.js', $.uglify()))
+        .pipe($.if('**/' + config.optimized.main, $.ngAnnotate()))
+        .pipe($.if('**/' + config.optimized.main, $.uglify()))
+        .pipe($.if('**/' + config.optimized.lib, $.uglify()))
         .pipe(gulp.dest(config.build));
 });
 

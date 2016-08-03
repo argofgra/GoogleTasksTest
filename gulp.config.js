@@ -36,7 +36,11 @@ module.exports = function() {
         nodeserver: server + 'server.js',
         server: server,
         browserReloadDelay: 1000,
-        defaultPort: 7203
+        defaultPort: 7203,
+        optimized: {
+            main: 'main.js',
+            lib: 'lib.js'
+        }
     };
 
     return config;
