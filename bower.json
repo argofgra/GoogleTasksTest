@@ -1,5 +1,6 @@
 {
   "name": "googletaskstest",
+  "version": "0.1.0",
   "description": "First attempt at Google Tasks app",
   "authors": [
     "Jason Cole"

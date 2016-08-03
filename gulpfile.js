@@ -151,7 +151,32 @@ gulp.task('optimize', ['inject'], function() {
         .pipe($.if('**/' + config.optimized.main, $.ngAnnotate()))
         .pipe($.if('**/' + config.optimized.main, $.uglify()))
         .pipe($.if('**/' + config.optimized.lib, $.uglify()))
+        .pipe($.if(['**/*.js', '**/*.css'], $.rev()))
+        .pipe($.revReplace())
+        .pipe(gulp.dest(config.build))
+        .pipe($.rev.manifest())
         .pipe(gulp.dest(config.build));
+});
+
+gulp.task('bump', function() {
+    var msg = 'Bumping version';
+    var type = args.type;
+    var version = args.version;
+    var options = {};
+    if (version) {
+        options.version = version;
+        msg += ' to ' + version;
+    } else {
+        options.type = type;
+        msg += ' for a ' + type;
+    }
+
+    log(msg);
+    return gulp
+        .src(config.packages)
+        .pipe($.print())
+        .pipe($.bump(options))
+        .pipe(gulp.dest('./'));
 });
 
 gulp.task('serve-dev', ['inject'], function() {

@@ -20,6 +20,10 @@ module.exports = function() {
         js: source + 'scripts/**/*.*',
         source: source,
         htmltemplates: source + 'templates/**/*.html',
+        packages: [
+            './package.json',
+            './bower.json'
+        ],
         templateCache: {
             file: 'templates.js',
             options: {
