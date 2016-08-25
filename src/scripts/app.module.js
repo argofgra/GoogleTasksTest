@@ -9,6 +9,8 @@
         .run(appRun);
 
     configRoutes.$inject = ['$routeProvider'];
+    appRun.$inject = ['$rootScope', '$location'];
+
     function configRoutes($routeProvider) {
         $routeProvider
             .when('/lists', {
@@ -30,7 +32,6 @@
             .otherwise({redirectTo: '/lists'});
     }
 
-    appRun.$inject = ['$rootScope', '$location'];
     function appRun($rootScope, $location) {
         $rootScope.$on("$locationChangeStart", function(event, next, current) {
             if ($rootScope.isAuthenticated !== true && next.templateUrl !== "/loading") {

@@ -4,17 +4,30 @@
 (function() {
     "use strict";
 
-    var tasks = function($q, $log) {
+    var app = angular.module('TasksList');
+    app.factory('tasks', tasks);
+
+    tasks.$inject = ['$q', '$log'];
+
+    function tasks($q, $log) {
 
         var clientId = '782065656987-vo55s1ki18vfk5vnm6cr6qtos3vn0uen.apps.googleusercontent.com';
         var scopes = 'https://www.googleapis.com/auth/tasks.readonly';
 
+        var service = {
+            checkAuth: checkAuth,
+            getTaskLists: getTaskLists
+        };
+
+        return service;
+
+        ///////////////////
         /**
          * Checks if user is authenticated to Google
          * @param immediate
          * @returns {*}
          */
-        var checkAuth = function(immediate) {
+        function checkAuth(immediate) {
             console.log('checkAuth start...');
             var deferred = $q.defer();
 
@@ -34,7 +47,7 @@
          * Retrieves task lists, loading tasks API if needed
          * @returns {*}
          */
-        var getTaskLists = function() {
+        function getTaskLists() {
             console.log('makeApiCall start...');
 
             var deferred = $q.defer();
@@ -51,33 +64,9 @@
                     }, function(error) {
                         $log.error('Failed getting task lists');
                     });
-                //request.execute(function(resp) {
-                //    console.log("Task lists returned...");
-                //    var taskLists = resp.items;
-                //    deferred.resolve(taskLists);
-                //    //if (taskLists && taskLists.length > 0) {
-                //    //    for (var i = 0; i < taskLists.length; i++) {
-                //    //        var taskList = taskLists[i];
-                //    //        console.log(taskList.title + ' (' + taskList.id + ')');
-                //    //        //appendPre(taskList.title + ' (' + taskList.id + ')');
-                //    //    }
-                //    //} else {
-                //    //    console.log('No task lists found.');
-                //    //}
-                //});
             });
 
             return deferred.promise;
-        };
-
-        return {
-            checkAuth: checkAuth,
-            getTaskLists: getTaskLists
-        };
-
-    };
-
-    tasks.$inject = ['$q', '$log'];
-    var app = angular.module('TasksList');
-    app.factory('tasks', tasks);
+        }
+    }
 }());
