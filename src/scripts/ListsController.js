@@ -7,11 +7,23 @@
     var app = angular.module('TasksList');
     app.controller('ListsController', ListsController);
 
-    ListsController.$inject = ['$scope', '$log', 'tasks'];
+    ListsController.$inject = ['$log', 'tasks'];
 
-    function ListsController($scope, $log, tasks) {
+    function ListsController($log, tasks) {
 
-        tasks.getTaskLists().then(getTaskListsSuccess, getTaskListsFail);
+        var vm = this;
+        vm.taskLists = [];
+
+        activate();
+
+        ///////////////
+
+        /**
+         * Controller activation
+         */
+        function activate() {
+            tasks.getTaskLists().then(getTaskListsSuccess, getTaskListsFail);
+        }
 
         /**
          * Handles successful retrieval of task lists
@@ -19,7 +31,7 @@
          */
         function getTaskListsSuccess(data) {
             $log.log('got Task Lists Successfully!');
-            $scope.taskLists = data;
+            vm.taskLists = data;
         }
 
         /**
@@ -29,27 +41,5 @@
         function getTaskListsFail(data) {
             $log.error("Failed to get task lists :(");
         }
-
-
-
-        ///**
-        // * Handles successful retrieval of task lists
-        // * @param data
-        // */
-        //var getTaskListsSuccess = function(data) {
-        //    $log.log('got Task Lists Successfully!');
-        //    $scope.taskLists = data;
-        //};
-        //
-        ///**
-        // * Handles failed retrieval of task lists
-        // * @param data
-        // */
-        //var getTaskListsFail = function(data) {
-        //    $log.error("Failed to get task lists :(");
-        //};
-        //
-        //tasks.getTaskLists().then(getTaskListsSuccess, getTaskListsFail);
-
     }
 }());

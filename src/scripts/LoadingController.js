@@ -4,19 +4,26 @@
     var app = angular.module('TasksList');
     app.controller('LoadingController', LoadingController);
 
-    LoadingController.$inject = ['$scope', '$rootScope', '$log', 'tasks', '$http', '$location'];
+    LoadingController.$inject = ['$rootScope', '$log', 'tasks', '$http', '$location'];
 
-    function LoadingController($scope, $rootScope, $log, tasks, $http, $location) {
+    function LoadingController($rootScope, $log, tasks, $http, $location) {
         $log.log('loading...');
 
-        // initialize variables
-        $scope.showAuthButton = false;
-        $rootScope.isAuthenticated = false;
-        $scope.authButtonClick = authButtonClick;
+        var vm = this;
+        vm.showAuthButton = false;
+        vm.authButtonClick = authButtonClick;
 
-        checkAuthorization();
+        activate();
 
         /////////////////////
+
+        /**
+         * Controller activation
+         */
+        function activate() {
+            $rootScope.isAuthenticated = false;
+            checkAuthorization();
+        }
 
         /**
          * Handles successful authorization, redirecting to /lists
@@ -25,7 +32,7 @@
         function authSuccess(value) {
             $log.log('Authorization successful!');
             $rootScope.isAuthenticated = true;
-            $scope.showAuthButton = false;
+            vm.showAuthButton = false;
 
             $location.path('/lists');
         }
@@ -37,7 +44,7 @@
         function authFail(error) {
             $log.error('Authorization failed :(');
             $rootScope.isAuthenticated = false;
-            $scope.showAuthButton = true;
+            vm.showAuthButton = true;
         }
 
         /**

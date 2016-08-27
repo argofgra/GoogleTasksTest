@@ -27,7 +27,7 @@ gulp.task('vet', function() {
         .pipe($.jshint.reporter('fail'));
 });
 
-gulp.task('styles', /*['clean-styles'],*/ function() {
+gulp.task('styles', ['clean-styles'], function() {
     "use strict";
     log('Compiling Less -> CSS');
     return gulp
@@ -79,7 +79,7 @@ gulp.task('clean-code', function(done) {
     var files = [].concat(
         config.temp + '**/*.js',
         config.build + '**/*.html',
-        config.build + 'js/**/*.js'
+        config.build + 'scripts/**/*.js'
     );
     clean(files, done);
 });

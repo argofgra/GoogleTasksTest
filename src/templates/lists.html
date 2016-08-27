@@ -1,6 +1,6 @@
-<div>
+<div ng-controller="ListsController as vm">
     <ul>
-        <li class="class1" ng-repeat="list in taskLists">
+        <li class="class1" ng-repeat="list in vm.taskLists">
             {{list.title}}
         </li>
     </ul>
