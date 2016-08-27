@@ -14,10 +14,14 @@
     function configRoutes($routeProvider) {
         $routeProvider
             .when('/lists', {
-                templateUrl: 'templates/lists.html'
+                templateUrl: 'templates/lists.html',
+                controller: 'ListsController',
+                controllerAs: 'vm'
             })
             .when('/loading', {
-                templateUrl: 'templates/loading.html'
+                templateUrl: 'templates/loading.html',
+                controller: 'LoadingController',
+                controllerAs: 'vm'
             })
             //.when('/user/:username', {
             //    templateUrl: 'user.html',
