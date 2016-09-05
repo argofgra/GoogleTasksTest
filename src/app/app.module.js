@@ -14,12 +14,12 @@
     function configRoutes($routeProvider) {
         $routeProvider
             .when('/lists', {
-                templateUrl: 'templates/lists.html',
+                templateUrl: 'app/lists/lists.html',
                 controller: 'ListsController',
                 controllerAs: 'vm'
             })
             .when('/loading', {
-                templateUrl: 'templates/loading.html',
+                templateUrl: 'app/loading/loading.html',
                 controller: 'LoadingController',
                 controllerAs: 'vm'
             })
@@ -34,6 +34,7 @@
             .otherwise({redirectTo: '/lists'});
     }
 
+    //TODO: consider making this a resolver function that returns a promise and waits until the user is authenticated... does that make sense?
     function appRun($rootScope, $location) {
         $rootScope.$on("$locationChangeStart", function(event, next, current) {
             if ($rootScope.isAuthenticated !== true && next.templateUrl !== "/loading") {

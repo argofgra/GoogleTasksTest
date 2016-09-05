@@ -79,7 +79,7 @@ gulp.task('clean-code', function(done) {
     var files = [].concat(
         config.temp + '**/*.js',
         config.build + '**/*.html',
-        config.build + 'scripts/**/*.js'
+        config.build + 'app/**/*.js'
     );
     clean(files, done);
 });

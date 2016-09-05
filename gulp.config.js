@@ -4,7 +4,7 @@ module.exports = function() {
     var temp = './.tmp/';
     var build = './build/';
     var source = './src/';
-    var scripts = source + 'scripts/';
+    var app = source + 'app/';
     var server = './server/';
     var report = './report/';
     var specRunnerFile = 'specs.html';
@@ -22,9 +22,9 @@ module.exports = function() {
         images: source + 'images/**/*.*',
         less: source + 'styles.less',
         css: temp + 'styles.css',
-        js: scripts + '**/*.*',
+        js: app + '**/*.*',
         source: source,
-        htmltemplates: source + 'templates/**/*.html',
+        htmltemplates: source + 'app/**/*.html',
         packages: [
             './package.json',
             './bower.json'
@@ -34,7 +34,7 @@ module.exports = function() {
             options: {
                 module: 'TasksList',
                 standAlone: false,
-                root: 'templates/'
+                root: 'app/'
             }
         },
         wiredepOptions: {
@@ -52,7 +52,7 @@ module.exports = function() {
         },
         specHelpers: [source + 'test-helpers/*.js'],
         serverIntegrationSpecs: [source + 'server-tests/**/*.spec.js'],
-        specs: scripts + '**/*.spec.js',
+        specs: app + '**/*.spec.js',
         specRunner: source + specRunnerFile,
         specRunnerFile: specRunnerFile,
         testlibraries: [
@@ -91,7 +91,7 @@ module.exports = function() {
             preprocessors: {}
         };
 
-        options.preprocessors[scripts + '**/!(*.spec)+(.js)'] = ['coverage'];
+        options.preprocessors[app + '**/!(*.spec)+(.js)'] = ['coverage'];
 
         return options;
     }
