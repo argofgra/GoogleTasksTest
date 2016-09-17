@@ -22,9 +22,10 @@ module.exports = function() {
         images: source + 'images/**/*.*',
         less: source + 'styles.less',
         css: temp + 'styles.css',
-        js: app + '**/*.*',
+        js: [app + '**/*.module.js', app + '**/*.js'],
         source: source,
-        htmltemplates: source + 'app/**/*.html',
+        htmltemplates: app + '**/*.html',
+        utilities: [app + 'utilities/**/*.module.js', app + 'utilities/**/*.js'],
         packages: [
             './package.json',
             './bower.json'

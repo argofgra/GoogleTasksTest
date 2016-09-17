@@ -4,6 +4,7 @@
     <meta charset='utf-8'/>
     <!--build:css styles/lib.css-->
     <!--bower:css-->
+    <link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
     <!--endbower-->
     <!--endbuild-->
 
@@ -26,12 +27,25 @@
 <!--bower:js-->
 <script src="/bower_components/angular/angular.js"></script>
 <script src="/bower_components/angular-route/angular-route.js"></script>
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/toastr/toastr.js"></script>
 <!--endbower-->
+
 <!--endbuild-->
 
 <!--build:js app/main.js-->
+
+<!--inject:utilities:js-->
+<script src="/src/app/utilities/exception/exception.module.js"></script>
+<script src="/src/app/utilities/logger/logger.module.js"></script>
+<script src="/src/app/utilities/exception/exception-handler.js"></script>
+<script src="/src/app/utilities/logger/logger.js"></script>
+<!--endinject-->
+
 <!--inject:js-->
 <script src="/src/app/app.module.js"></script>
+<script src="/src/app/core/core.module.js"></script>
+<script src="/src/app/core/constants.js"></script>
 <script src="/src/app/lists/ListsController.js"></script>
 <script src="/src/app/loading/LoadingController.js"></script>
 <script src="/src/app/services/tasks.js"></script>

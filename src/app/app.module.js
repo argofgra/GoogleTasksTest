@@ -4,7 +4,7 @@
 (function() {
     "use strict";
 
-     angular.module('TasksList', ["ngRoute"])
+     angular.module('TasksList', ["ngRoute", "app.core"])
         .config(configRoutes)
         .run(appRun);
 
