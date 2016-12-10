@@ -2,7 +2,14 @@
 <div>
     <ul>
         <li class="class1" ng-repeat="list in vm.taskLists">
-            {{list.title}}
+            <a href="/#/lists/{{list.id}}/tasks">{{list.title}}</a>
+            <ul>
+                <li>kind: {{list.kind}}</li>
+                <li>id: {{list.id}}</li>
+                <li>etag: {{list.etag}}</li>
+                <li>selfLink: {{list.selfLink}}</li>
+                <li>updated: {{list.updated}}</li>
+            </ul>
         </li>
     </ul>
 </div>

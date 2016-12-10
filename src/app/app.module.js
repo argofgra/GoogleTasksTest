@@ -18,6 +18,11 @@
                 controller: 'ListsController',
                 controllerAs: 'vm'
             })
+            .when('/lists/:listId/tasks', {
+                templateUrl: 'app/tasks/tasks.html',
+                controller: 'TasksController',
+                controllerAs: 'vm'
+            })
             .when('/loading', {
                 templateUrl: 'app/loading/loading.html',
                 controller: 'LoadingController',
@@ -70,6 +75,7 @@
         function authRouting() {
             $rootScope.$on("$locationChangeStart", function (event, next, current) {
                 if ($rootScope.isAuthenticated !== true && next.templateUrl !== "/loading") {
+                    logger.info('Not authenticated, rerouting to /loading');
                     $location.path('/loading');
                 }
             });

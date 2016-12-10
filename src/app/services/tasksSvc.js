@@ -7,16 +7,17 @@
     var app = angular.module('TasksList');
     app.factory('tasksSvc', tasksSvc);
 
-    tasksSvc.$inject = ['$q', '$log'];
+    tasksSvc.$inject = ['$q', 'logger', '$routeParams'];
 
-    function tasksSvc($q, $log) {
+    function tasksSvc($q, logger, $routeParams) {
 
         var clientId = '782065656987-vo55s1ki18vfk5vnm6cr6qtos3vn0uen.apps.googleusercontent.com';
         var scopes = 'https://www.googleapis.com/auth/tasks.readonly';
 
         var service = {
             checkAuth: checkAuth,
-            getTaskLists: getTaskLists
+            getTaskLists: getTaskLists,
+            getTasksFromList: getTasksFromList
         };
 
         return service;
@@ -28,7 +29,7 @@
          * @returns {*}
          */
         function checkAuth(immediate) {
-            console.log('checkAuth start...');
+            logger.info('checkAuth start...');
             var deferred = $q.defer();
 
             gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: immediate}, function(authResult) {
@@ -48,23 +49,44 @@
          * @returns {*}
          */
         function getTaskLists() {
-            console.log('Get task lists using gapi');
+            logger.info('Get task lists using gapi');
 
             var deferred = $q.defer();
 
             gapi.client.load('tasks', 'v1', function() {
-                $log.log('tasks api loaded');
-                $log.log('Getting task lists');
+                logger.info('tasks api loaded');
+                logger.info('Getting task lists');
+
                 gapi.client.tasks.tasklists.list({
                     'maxResults': 10
                 }).then(
                     function(response) {
-                        $log.log('Task lists returned');
+                        logger.info('Task lists returned');
                         deferred.resolve(response.result.items);
                     }, function(error) {
-                        $log.error('Failed getting task lists');
+                        logger.error('Failed getting task lists');
                     });
             });
+
+            return deferred.promise;
+        }
+
+        function getTasksFromList() {
+            var listId = $routeParams.listId;
+            logger.info('Getting tasks from list ' + listId);
+            logger.info('listId type: ' + typeof(listId));
+
+            var deferred = $q.defer();
+
+            gapi.client.tasks.tasks.list({
+                'tasklist': listId
+            }).then(
+                function(response) {
+                    logger.info('Tasks retrieved, count ' + response.result.items.length);
+                    deferred.resolve(response.result.items);
+                }, function(error) {
+                    logger.error(error);
+                });
 
             return deferred.promise;
         }
