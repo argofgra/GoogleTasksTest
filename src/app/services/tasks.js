@@ -48,7 +48,7 @@
          * @returns {*}
          */
         function getTaskLists() {
-            console.log('makeApiCall start...');
+            console.log('Get task lists using gapi');
 
             var deferred = $q.defer();
 

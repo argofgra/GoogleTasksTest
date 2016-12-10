@@ -11,8 +11,8 @@
          * Our reusable cross app code modules
          */
         'utils.exception', 'utils.logger'
-        //, 'blocks.router',
-
+        //, 'utils.router'
+        //,
         /*
          * 3rd Party modules
          */
