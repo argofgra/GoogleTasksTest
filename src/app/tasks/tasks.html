@@ -1,8 +1,26 @@
 <!-- TasksController as vm -->
-<div>
-    <ul>
-        <li class="class1" ng-repeat="task in vm.tasks">
-            {{task.title}}
+<div class="tasksCollection">
+    <ul class="tasks" dnd-list="vm.tasks">
+        <li class="task" ng-repeat="task in vm.tasks"
+                dnd-draggable="task"
+                dnd-moved="vm.tasks.splice($index, 1)"
+                dnd-effect-allowed="move">
+            <span ng-show="task.title != ''">{{task.title}}</span>
+            <span ng-show="task.title == ''">null...</span>
+            <ul>
+                <li>kind: {{task.kind}}</li>
+                <li>etag: {{task.etag}}</li>
+                <li>updated: {{task.updated}}</li>
+                <li>selfLink: {{task.selfLink}}</li>
+                <li>parent: {{task.parent}}</li>
+                <li>position: {{task.position}}</li>
+                <li>notes: {{task.notes}}</li>
+                <li>status: {{task.status}}</li>
+                <li>due: {{task.due}}</li>
+                <li>completed: {{task.completed}}</li>
+                <li>deleted: {{task.deleted}}</li>
+                <li>hidden: {{task.hidden}}</li>
+            </ul>
         </li>
     </ul>
 </div>

@@ -9,3 +9,27 @@
     font-size: 16px;
   }
 }
+
+.tasksCollection {
+  ul[dnd-list] {
+    position: relative;
+    > li {
+      position: relative;
+      border: 1px solid #ddd;
+      display:block;
+      padding: 10px 10px;
+      margin-bottom: -1px;
+    }
+    li {
+
+    }
+    .dndPlaceholder {
+      display:block;
+      background-color:red;
+      min-height: 234px;
+    }
+    .dndDraggingSource {
+      display:none;
+    }
+  }
+}
