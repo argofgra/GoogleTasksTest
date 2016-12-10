@@ -4,9 +4,9 @@
     var app = angular.module('TasksList');
     app.controller('LoadingController', LoadingController);
 
-    LoadingController.$inject = ['$rootScope', '$log', 'tasks', '$http', '$location'];
+    LoadingController.$inject = ['$rootScope', '$log', 'tasksSvc', '$http', '$location'];
 
-    function LoadingController($rootScope, $log, tasks, $http, $location) {
+    function LoadingController($rootScope, $log, tasksSvc, $http, $location) {
         $log.log('loading...');
 
         var vm = this;
@@ -59,7 +59,7 @@
             }
 
             if (gapiLoaded) {
-                tasks.checkAuth(true).then(authSuccess, authFail);
+                tasksSvc.checkAuth(true).then(authSuccess, authFail);
             } else {
                 $log.log('setting timeout');
                 window.setTimeout(checkAuthorization, 1);
@@ -71,7 +71,7 @@
          */
         function authButtonClick() {
             $log.log('Auth button clicked...');
-            tasks.checkAuth(false).then(authSuccess).fail(authFail);
+            tasksSvc.checkAuth(false).then(authSuccess).fail(authFail);
         }
     }
 }());

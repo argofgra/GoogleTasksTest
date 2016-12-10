@@ -7,9 +7,9 @@
     var app = angular.module('TasksList');
     app.controller('ListsController', ListsController);
 
-    ListsController.$inject = ['$log', 'tasks', '$rootScope', '$location', 'logger'];
+    ListsController.$inject = ['$log', 'tasksSvc', '$rootScope', '$location', 'logger'];
 
-    function ListsController($log, tasks, $rootScope, $location, logger) {
+    function ListsController($log, tasksSvc, $rootScope, $location, logger) {
 
         var vm = this;
         vm.taskLists = [];
@@ -23,7 +23,7 @@
          */
         function activate() {
             //handleRoutingErrors();
-            tasks.getTaskLists().then(getTaskListsSuccess, getTaskListsFail);
+            tasksSvc.getTaskLists().then(getTaskListsSuccess, getTaskListsFail);
         }
 
         //TODO: never got this working, look at it again later

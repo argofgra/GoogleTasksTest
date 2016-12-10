@@ -5,11 +5,11 @@
     "use strict";
 
     var app = angular.module('TasksList');
-    app.factory('tasks', tasks);
+    app.factory('tasksSvc', tasksSvc);
 
-    tasks.$inject = ['$q', '$log'];
+    tasksSvc.$inject = ['$q', '$log'];
 
-    function tasks($q, $log) {
+    function tasksSvc($q, $log) {
 
         var clientId = '782065656987-vo55s1ki18vfk5vnm6cr6qtos3vn0uen.apps.googleusercontent.com';
         var scopes = 'https://www.googleapis.com/auth/tasks.readonly';
