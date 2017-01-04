@@ -1,13 +1,17 @@
 <!-- TasksController as vm -->
 <div class="tasksCollection">
-    <ul class="tasks" dnd-list="vm.tasks">
-        <li class="task" ng-repeat="task in vm.tasks"
+    <ul class="tasks"
+        dnd-list="vm.tasks"
+        dnd-drop="vm.dropHandler(event, index, item, external, type, 'itemType')">
+        <li class="task" ng-repeat="task in vm.tasks | orderBy: 'position'"
                 dnd-draggable="task"
-                dnd-moved="vm.tasks.splice($index, 1)"
+                dnd-dragstart="vm.dragStartHandler(event, $index)"
+                dnd-moved="vm.movedHandler($index)"
                 dnd-effect-allowed="move">
             <span ng-show="task.title != ''">{{task.title}}</span>
             <span ng-show="task.title == ''">null...</span>
             <ul>
+                <li>id: {{task.id}}</li>
                 <li>kind: {{task.kind}}</li>
                 <li>etag: {{task.etag}}</li>
                 <li>updated: {{task.updated}}</li>

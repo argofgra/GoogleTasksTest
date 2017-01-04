@@ -75,7 +75,7 @@
         function authRouting() {
             $rootScope.$on("$locationChangeStart", function (event, next, current) {
                 if ($rootScope.isAuthenticated !== true && next.templateUrl !== "/loading") {
-                    logger.info('Not authenticated, rerouting to /loading');
+                    logger.warning('Not authenticated, rerouting to /loading');
                     $location.path('/loading');
                 }
             });

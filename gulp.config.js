@@ -27,7 +27,7 @@ module.exports = function() {
         htmltemplates: app + '**/*.html',
         utilities: [app + 'utilities/**/*.module.js', app + 'utilities/**/*.js'],
         packages: [
-            './package.json',
+            './discoveryJSON.json',
             './bower.json'
         ],
         templateCache: {
